@@ -67,7 +67,7 @@ const deleteMovie = asyncHandler(async (req, res) => {
 });
 const updateMovie = asyncHandler(async (req, res) => {
   const { id } = req.params;
-  const { title, publishingYear } = req.body;
+  const { title, publishingYear, poster } = req.body;
   if (!title && !publishingYear) {
     throw new ApiError(
       400,
@@ -78,8 +78,8 @@ const updateMovie = asyncHandler(async (req, res) => {
   if (title) updateFields.title = title;
   if (publishingYear) updateFields.publishingYear = publishingYear;
 
-  if (req.file && req.file.buffer) {
-    updateFields.poster = req.file.buffer;
+  if (poster) {
+    updateFields.poster = poster;
   }
 
   const movie = await Movie.findByIdAndUpdate(id, updateFields, {
