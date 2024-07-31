@@ -4,14 +4,14 @@ import { ApiError } from "../../utils/ApiError.js";
 import { ApiResponse } from "../../utils/ApiResponse.js";
 
 const createMovie = asyncHandler(async (req, res) => {
-  const { title, publishingYear } = req.body;
+  const { title, publishingYear, poster } = req.body;
   if (!title && !publishingYear) {
     throw new ApiError(400, "All fields are required");
   }
   const movie = new Movie({
     title,
     publishingYear,
-    poster: "",
+    poster,
   });
   await movie.save();
   return res
